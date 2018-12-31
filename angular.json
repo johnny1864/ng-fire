@@ -135,5 +135,10 @@
       }
     }
   },
-  "defaultProject": "ng-fire"
+  "defaultProject": "ng-fire",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
