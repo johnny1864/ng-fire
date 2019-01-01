@@ -6,12 +6,12 @@ import { ResetPasswordComponent } from "./reset-password/reset-password.componen
 import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
-  { path: "signin", component: SigninComponent },
-  { path: "signup", component: SignupComponent },
+  { path: "signin", component: SigninComponent, data: { title: "signin" } },
+  { path: "signup", component: SignupComponent, data: { title: "signup" } },
   {
     path: "reset-password",
     component: ResetPasswordComponent,
-    data: { title: "reset-password" }
+    data: { title: "Reset Password" }
   }
 ];
 @NgModule({
