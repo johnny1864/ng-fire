@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Observable } from "rxjs";
-import "rxjs/add/operator/switchMap";
+import { Observable, of } from "rxjs";
 import { Router } from "@angular/router";
 import { AngularFirestore } from "@angular/fire/firestore";
+import { switchMap } from "rxjs/operators";
 
 interface User {
   uid: string;
@@ -25,13 +25,15 @@ export class AuthService {
   ) {}
 
   ngOnInit() {
-    this.user = this.afAuth.authState.switchMap(user => {
-      if (user) {
-        return this.afs.doc<User>(`user/${user.uid}`).valueChange();
-      } else {
-        return Observable.of(null);
-      }
-    });
+    this.user = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.afs.doc<User>(`user/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
   emailSignIn(email: string, password: string) {
