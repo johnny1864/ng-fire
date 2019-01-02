@@ -37,7 +37,6 @@ export class SigninComponent implements OnInit {
   }
 
   signIn() {
-    console.log(this.email.value, this.email);
     return this._auth
       .emailSignIn(this.email.value, this.password.value)
       .then(user => {

@@ -2,7 +2,10 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Observable, of } from "rxjs";
 import { Router } from "@angular/router";
-import { AngularFirestore } from "@angular/fire/firestore";
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from "@angular/fire/firestore";
 import { switchMap } from "rxjs/operators";
 
 interface User {
@@ -36,11 +39,35 @@ export class AuthService {
     );
   }
 
+  // LOG USER IN WITH EMAIL
   emailSignIn(email: string, password: string) {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(() => console.log("You have been logged in"))
       .catch(err => console.log(err.message));
+  }
+
+  // REGISTER USER WITH EMAIL
+  emailSignUp(email: string, password: string) {
+    return this.afAuth.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => this.updateUserData(user))
+      .then(() => console.log("You have been logged in"))
+      .catch(err => console.log(err.message));
+  }
+
+  private updateUserData(user) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `user/${user.uid}`
+    );
+    const data: User = {
+      uid: user.uid,
+      email: user.email || null,
+      displayName: user.displayName,
+      photoURL: user.photoURL
+    };
+
+    return userRef.set(data, { merge: true });
   }
 
   signOut() {
