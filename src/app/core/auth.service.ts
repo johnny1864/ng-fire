@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Observable, of } from "rxjs";
 import { Router } from "@angular/router";
+import * as firebase from "firebase/app";
 import {
   AngularFirestore,
   AngularFirestoreDocument
@@ -54,6 +55,12 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(user => this.updateUserData(user))
       .then(() => console.log("You have been registered"))
+      .then(user => {
+        this.afAuth.auth.currentUser
+          .sendEmailVerification()
+          .then(_ => console.log("Verification email has been sent"))
+          .catch(err => console.log(err));
+      })
       .catch(err => console.log(err.message));
   }
 
@@ -72,6 +79,13 @@ export class AuthService {
     };
 
     return userRef.set(data, { merge: true });
+  }
+
+  // RESET PASSWORD
+  resetPassword(email: string) {
+    return firebase.auth().sendPasswordResetEmail(email)
+    .then(_ => console.log('Password reset email has been set'))
+    .catch(err => console.log(err.message))
   }
 
   signOut() {
