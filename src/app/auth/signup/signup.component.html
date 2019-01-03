@@ -1,0 +1,32 @@
+<main>
+  <section>
+    <h3>Hello New User</h3>
+    <h4>Register Here</h4>
+    <form [formGroup]="signUpForm" (ngSubmit)="signIn()">
+      <mat-form-field [formGroup]="signUpForm">
+        <input
+          type="text"
+          [formControl]="email"
+          matInput
+          placeholder="Enter Email"
+        />
+        <mat-error *ngIf="email.valid">Invalid Email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field [formGroup]="signUpForm">
+        <input
+          [type]="hide ? 'password' : 'text'"
+          matInput
+          placeholder="Enter Password"
+          [formControl]="password"
+        />
+        <mat-icon matSuffix (click)="hide = !hide">
+          {{ hide ? "visibility" : "visibility_off" }}
+        </mat-icon>
+        <mat-error *ngIf="password.valid">Invalid Password</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" color="accent">Sign In</button>
+    </form>
+  </section>
+</main>

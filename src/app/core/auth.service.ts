@@ -52,7 +52,7 @@ export class AuthService {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => this.updateUserData(user))
-      .then(() => console.log("You have been logged in"))
+      .then(() => console.log("You have been registered"))
       .catch(err => console.log(err.message));
   }
 
@@ -60,6 +60,7 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `user/${user.uid}`
     );
+    console.log(user);
     const data: User = {
       uid: user.uid,
       email: user.email || null,
