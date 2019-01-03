@@ -9,6 +9,7 @@ import {
 } from "@angular/fire/firestore";
 import { switchMap } from "rxjs/operators";
 import { Md5 } from "ts-md5/dist/md5";
+import { findReadVarNames } from "@angular/compiler/src/output/output_ast";
 
 interface User {
   uid: string;
@@ -49,6 +50,16 @@ export class AuthService {
       .catch(err => console.log(err.message));
   }
 
+  // OAUTH LOGIN
+  oAuthLogin(provider) {
+    return this.afAuth.auth
+      .signInWithRedirect(provider)
+      .then(credential => {
+        return this.updateUserData(credential);
+      })
+      .catch(err => console.log(err.message));
+  }
+
   // REGISTER USER WITH EMAIL
   emailSignUp(email: string, password: string) {
     return this.afAuth.auth
@@ -83,9 +94,31 @@ export class AuthService {
 
   // RESET PASSWORD
   resetPassword(email: string) {
-    return firebase.auth().sendPasswordResetEmail(email)
-    .then(_ => console.log('Password reset email has been set'))
-    .catch(err => console.log(err.message))
+    return firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(_ => console.log("Password reset email has been set"))
+      .catch(err => console.log(err.message));
+  }
+
+  // SOCIAL LOGIN PROVIDERS
+
+  // Google LOGIN
+  googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    this.oAuthLogin(provider);
+  }
+
+  // FACEBOOK LOGIN
+  facebookLogin() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    this.oAuthLogin(provider);
+  }
+
+  // GITHUB
+  gitHubLogin() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    this.oAuthLogin(provider);
   }
 
   signOut() {
