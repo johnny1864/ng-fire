@@ -23,7 +23,7 @@ interface User {
 })
 export class AuthService {
   user: Observable<User>;
-
+  authState: any = null;
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -40,6 +40,15 @@ export class AuthService {
         }
       })
     );
+    this.afAuth.authState.subscribe(data => (this.authState = data));
+  }
+
+  get authenticated(): boolean {
+    return this.authState !== null;
+  }
+
+  get currentUserId(): string {
+    return this.authenticated ? this.authState.uid : null;
   }
 
   // LOG USER IN WITH EMAIL
@@ -55,6 +64,7 @@ export class AuthService {
     return this.afAuth.auth
       .signInWithRedirect(provider)
       .then(credential => {
+        console.log("login in with google");
         return this.updateUserData(credential);
       })
       .catch(err => console.log(err.message));
@@ -116,7 +126,7 @@ export class AuthService {
   }
 
   // GITHUB
-  gitHubLogin() {
+  githubLogin() {
     const provider = new firebase.auth.GithubAuthProvider();
     this.oAuthLogin(provider);
   }

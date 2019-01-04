@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     public fb: FormBuilder,
-    private _auth: AuthService,
+    public _auth: AuthService,
     private router: Router
   ) {
     this.signUpForm = fb.group({
