@@ -1,9 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument
+} from "@angular/fire/firestore";
+import { User } from "./user.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UserService {
+  userCollection: AngularFirestoreCollection<User>;
 
-  constructor() { }
+  constructor(private afs: AngularFirestore) {}
+
+  getUser() {
+    this.userCollection = this.afs.collection("users");
+    return this.userCollection.valueChanges();
+  }
 }
