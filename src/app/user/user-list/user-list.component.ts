@@ -17,6 +17,6 @@ export class UserListComponent implements OnInit {
   }
 
   getUsers() {
-    this.users = this._user.getUser();
+    this.users = this._user.getUsers();
   }
 }

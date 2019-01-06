@@ -1,0 +1,16 @@
+<div *ngIf="user">
+  <mat-card routerLink="{{ user.uid }}">
+    <mat-card-header>
+      <img [src]="user.photoURL" alt="{{ user.displayName }} avatar" />
+
+      <div>
+        <mat-card-title> {{ user.displayName }} </mat-card-title>
+        <mat-card-subtitle> {{ user.email }} </mat-card-subtitle>
+      </div>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <p>{{ user.uid }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

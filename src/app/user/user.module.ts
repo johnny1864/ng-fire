@@ -10,7 +10,7 @@ import { RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   { path: "dashboard", component: UserDashboardComponent },
   { path: "users", component: UserListComponent },
-  { path: "profile", component: UserDetailComponent }
+  { path: "users/:id", component: UserDetailComponent }
 ];
 
 @NgModule({

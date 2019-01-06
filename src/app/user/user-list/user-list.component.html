@@ -1,18 +1,4 @@
-<ul>
-  <li *ngFor="let user of (users | async)">
-    <mat-card>
-      <mat-card-header>
-        <img [src]="user.photoURL" alt="{{ user.displayName }} avatar" />
-
-        <div>
-          <mat-card-title> {{ user.displayName }} </mat-card-title>
-          <mat-card-subtitle> {{ user.email }} </mat-card-subtitle>
-        </div>
-      </mat-card-header>
-
-      <mat-card-content>
-        <p>{{ user.uid }}</p>
-      </mat-card-content>
-    </mat-card>
-  </li>
-</ul>
+<app-user-item
+  *ngFor="let user of (users | async)"
+  [user]="user"
+></app-user-item>

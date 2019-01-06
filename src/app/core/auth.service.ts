@@ -98,7 +98,7 @@ export class AuthService {
       displayName: user.displayName,
       photoURL:
         user.photoURL ||
-        `http://www.gravatar.com/avatar ${Md5.hashStr(user.uid)}?d=identicon`
+        `http://www.gravatar.com/avatar/${Md5.hashStr(user.uid)}?d=identicon`
     };
 
     return userRef.set(data, { merge: true });
