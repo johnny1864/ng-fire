@@ -28,11 +28,10 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
-  ) {}
-
-  ngOnInit() {
+  ) {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
+        // console.log(user);
         if (user) {
           return this.afs.doc<User>(`user/${user.uid}`).valueChanges();
         } else {

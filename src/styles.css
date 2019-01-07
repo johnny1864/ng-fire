@@ -1,6 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --background-color: #f6f6f6;
+  --primary-color: #e34234;
+}
+
+body {
+  background-color: var(--background-color);
+}
 
 ul {
   list-style: none;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
